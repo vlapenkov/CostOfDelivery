@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CalcApi.Models.AlLogistic
+namespace CostRequest.Calculator
 {
     public class Row
     {

@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CalcApi.Models.AlLogistic
+namespace CostRequest.Calculator
 {
-    public class AlLogistic
+    public class AlLogisticModel
     {
         public int ID { get; set; }
         public string NAME { get; set; }

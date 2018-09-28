@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcApi", "CalcApi\CalcApi.csproj", "{33D0A80B-0C05-4C0C-B08F-C9C422458E80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalcApi", "CalcApi\CalcApi.csproj", "{33D0A80B-0C05-4C0C-B08F-C9C422458E80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CostRequest", "CostRequest\CostRequest.csproj", "{A337CD30-879A-4D38-83E8-D085E77AB814}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{33D0A80B-0C05-4C0C-B08F-C9C422458E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33D0A80B-0C05-4C0C-B08F-C9C422458E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33D0A80B-0C05-4C0C-B08F-C9C422458E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A337CD30-879A-4D38-83E8-D085E77AB814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A337CD30-879A-4D38-83E8-D085E77AB814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A337CD30-879A-4D38-83E8-D085E77AB814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A337CD30-879A-4D38-83E8-D085E77AB814}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
