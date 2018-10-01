@@ -16,15 +16,15 @@ namespace CalcApi.Controllers
     {
         public DeliveryPriceController()
         {
-            PriceList = new DeliveryPriceService(new List<ICalculator>());
+            PriceList = new DeliveryPriceService(new AlLogistic());
         }
 
-        private IDeliveryPriceService PriceList;
+        private DeliveryPriceService PriceList;
 
         public async Task<Dictionary<string,string>> GetPrice(string inCity, string outCity, double weight)
         {
             if (weight <= 0) return new Dictionary<string, string> { {"Error","Weigth  less or equal 0" } };
-            return await  PriceList.GetCostsAsync( inCity,  outCity,  weight);        
+            return await  PriceList.CalculateCostAsync( inCity,  outCity,  weight);        
         }
     }
 }

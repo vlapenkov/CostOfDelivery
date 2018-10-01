@@ -8,7 +8,8 @@ namespace CalcApi.Services
 {
     public class DeliveryPriceService 
     {
-        public DeliveryPriceService(ICalculator dpd,ICalculator alLogistic,ICalculator eastLine)
+
+        public DeliveryPriceService(ICalculator dpd=null,ICalculator alLogistic = null, ICalculator eastLine = null)
         {
             _dpd = dpd;
             _alLogistic = alLogistic;
@@ -21,12 +22,20 @@ namespace CalcApi.Services
 
         public async Task<Dictionary<string, string>> CalculateCostAsync(string inCity, string outCity, double weight)
         {
-            return new Dictionary<string, string>
+            var result = new Dictionary<string, string>();
+            if (_dpd != null)
             {
-                {_dpd.CompanyName,await _dpd.GetPriceAsync(inCity,outCity,weight) },
-                 {_alLogistic.CompanyName,await _alLogistic.GetPriceAsync(inCity,outCity,weight) },
-                 {_eastLine.CompanyName,await _eastLine.GetPriceAsync(inCity,outCity,weight) }
+                result.Add( _dpd.CompanyName,await _dpd.GetPriceAsync(inCity, outCity, weight));
+            }
+            if (_alLogistic != null)
+            {
+                result.Add(_alLogistic.CompanyName, await _alLogistic.GetPriceAsync(inCity, outCity, weight));
+            }
+            if(_eastLine!=null)
+            {
+                result.Add(_eastLine.CompanyName, await _eastLine.GetPriceAsync(inCity, outCity, weight));
             };
+            return result;
         }
     }
 }
