@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CalcApi.Services
 {
-    public class DeliveryPriceService : IDeliveryPriceService
+    public class DeliveryPriceService
     {
 
         private Dpd _dpd;

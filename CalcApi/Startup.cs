@@ -30,10 +30,6 @@ namespace CalcApi
             services.AddTransient<AlLogistic>();
             services.AddTransient<EastLine>();
             services.AddTransient<DeliveryPriceService>();
-         //   services.AddTransient<IConfiguration>();
-
-         //   services.AddSingleton<IConfiguration>(Configuration);
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +42,5 @@ namespace CalcApi
 
             app.UseMvc();
         }
-
-        private string _gKey = null;
     }
 }

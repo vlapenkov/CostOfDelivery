@@ -66,9 +66,7 @@ namespace CostRequest.Calculator
 
         #region приватные вспомогательные методы
         private string GetDistanceBetweenCities(string cityACoords, string cityBCoords)
-        {
-            // string gKey = "AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM";//
-                          // "AIzaSyD0jr02Zqe4rH1wnR7cRbAZhAsQHra1pvM";//myKey not work :(
+        { 
             var coordsA = cityACoords.Split(',');
             var coordsB = cityBCoords.Split(',');
             string path = $@"https://maps.googleapis.com/maps/api/distancematrix/json?destinations={coordsA[0]},{coordsA[1]}&origins={coordsB[0]},{coordsB[1]}&key={_gKey}&language=ru&unit=metric&departure_time=now";
@@ -117,14 +115,11 @@ namespace CostRequest.Calculator
                 return data.FirstOrDefault();
             }
         }
-
         /*в зависимости от массы груза, автоматически подбирается авто
          но если груз больше 20 тонн, выберется самая грузоподъемная, хоть она и расчитана до 
              */
         private int SelectCar(int weight) => weight >= 2000 ? (weight >= 5000 ? (weight > 10000 ? (weight < 20000 ? 2395 : 2395) : 2394) : 2393) : 2392;
-
-
-        
+       
         #endregion
     }
 }

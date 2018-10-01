@@ -87,8 +87,6 @@ namespace CostRequest.Calculator
                 return value.Replace(" ","");
             }
         }
-
-
         #endregion
     }
 }

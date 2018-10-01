@@ -18,10 +18,7 @@ namespace CalcApi.Controllers
         public DeliveryPriceController(DeliveryPriceService service)
         {
             _service = service;
-         //   PriceList = new DeliveryPriceService();
         }
-
-        private DeliveryPriceService PriceList;
 
         public async Task<Dictionary<string,string>> GetPrice(string inCity, string outCity, double weight)
         {

@@ -84,7 +84,7 @@ namespace CostRequest.Calculator
                     countryCode = inCity.countryCode,
                     regionCode = inCity.regionCode,
                     regionCodeSpecified = inCity.regionCodeSpecified
-                },// new CityRequestExtend(inCity),
+                },
                 delivery = new cityRequest
                 {
                     cityId = outCity.cityId,
@@ -93,7 +93,7 @@ namespace CostRequest.Calculator
                     countryCode = outCity.countryCode,
                     regionCode = outCity.regionCode,
                     regionCodeSpecified = outCity.regionCodeSpecified
-                },// new CityRequestExtend(outCity),
+                },
                 selfDelivery = false,
                 selfPickup = false,
                 weight = weight,
@@ -103,7 +103,6 @@ namespace CostRequest.Calculator
             var request = await client.getServiceCost2Async(serviceRequest);
       
             return request.@return.First().cost.ToString();
-           // return request.@return.Where(rq => rq.cost == min).Select(p => p.cost).ToString();
         }
 
         /// <summary>
