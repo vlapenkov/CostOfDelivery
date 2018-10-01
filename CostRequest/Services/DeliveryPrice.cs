@@ -1,4 +1,5 @@
 ﻿using CostRequest.Calculator;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CalcApi.Services
 {
-    public class DeliveryPriceService 
+    public class DeliveryPriceService : IDeliveryPriceService
     {
 
         public DeliveryPriceService(ICalculator dpd=null,ICalculator alLogistic = null, ICalculator eastLine = null)

@@ -16,7 +16,7 @@ namespace CalcApi.Controllers
     {
         public DeliveryPriceController()
         {
-            PriceList = new DeliveryPriceService(new AlLogistic());
+            PriceList = new DeliveryPriceService();
         }
 
         private DeliveryPriceService PriceList;
