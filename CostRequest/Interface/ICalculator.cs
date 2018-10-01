@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 namespace CostRequest.Calculator
 {
    public interface ICalculator
-    {
-        
+    {       
         
     ///// <summary>
     ///// 

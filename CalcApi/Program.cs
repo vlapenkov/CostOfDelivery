@@ -21,5 +21,6 @@ namespace CalcApi
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
+
     }
 }

@@ -5,13 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace CostRequest.Calculator
 {
     public class Dpd : ICalculator
     {
-        private readonly string clientKey = "6078E6EF054E13F442B4A46ADDE226628F946EDC";
-        private readonly long clientNumber = 1007003275;
+        private IConfiguration Configuration { get; set; }
+
+        public Dpd(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            clientKey = Configuration["DpdClientKey"];
+            clientNumber = Int64.Parse(Configuration["DpdClientNumber"]);
+        }
+        private readonly string clientKey; //= "6078E6EF054E13F442B4A46ADDE226628F946EDC";
+        private readonly long clientNumber;// = 1007003275;
+
+       
 
         public string CompanyName { get; set; } = "Dpd";
         public async Task<string> GetPriceAsync(string inCity, string outCity, double weight)

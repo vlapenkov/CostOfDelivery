@@ -6,13 +6,20 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace CostRequest.Calculator
 {       
     public class AlLogistic : ICalculator
     {
+        public AlLogistic(IConfiguration configuration)
+        {
+            Configuration = configuration;
+            _gKey = Configuration["_gKey"];
+        }
+        public IConfiguration Configuration { get; set; }
 
-        private readonly string _gKey = "AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM";
+        private readonly string _gKey;
 
         public string CompanyName { get; set; } = "AlLogistic";
 

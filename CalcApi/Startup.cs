@@ -33,6 +33,7 @@ namespace CalcApi
             services.AddTransient<EastLine>();
             services.AddTransient<DeliveryPriceService>();
 
+            _gKey = Configuration["_gKey"];
 
         }
 
@@ -46,5 +47,7 @@ namespace CalcApi
 
             app.UseMvc();
         }
+
+        private string _gKey = null;
     }
 }
