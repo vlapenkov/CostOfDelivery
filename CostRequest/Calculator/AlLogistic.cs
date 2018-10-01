@@ -13,6 +13,9 @@ namespace CostRequest.Calculator
     {
 
         private readonly string _gKey = "AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM";
+
+        public string CompanyName { get; set; } = "AlLogistic";
+
         public async Task<string> GetPriceAsync(string inCity, string outCity, double weight)
         {
             string url = @"http://allogistik.ru/ajax/special-rate.php";

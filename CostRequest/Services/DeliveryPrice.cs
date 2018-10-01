@@ -6,37 +6,27 @@ using System.Threading.Tasks;
 
 namespace CalcApi.Services
 {
-    public class DeliveryPriceService : IDeliveryPriceService
+    public class DeliveryPriceService 
     {
-        public DeliveryPriceService()
+        public DeliveryPriceService(ICalculator dpd,ICalculator alLogistic,ICalculator eastLine)
         {
-            _calculatorsCollection = new List<ICalculator> { new Dpd(), new AlLogistic(), new EastLine() };
+            _dpd = dpd;
+            _alLogistic = alLogistic;
+            _eastLine = eastLine;
         }
-        public DeliveryPriceService(IList<ICalculator> calculatorsCollection):this()
-        {
-            foreach (var item in calculatorsCollection)
-            {
-                _calculatorsCollection.Add(item);
-            }         
-        }
+        private ICalculator _dpd;
+        private ICalculator _alLogistic;
+        private ICalculator _eastLine;
+    
 
-        private IList<ICalculator> _calculatorsCollection;  
-
-        /// <summary>
-        /// Return list of deilivery cost from collection of calculators
-        /// </summary>
-        /// <param name="inCity">City of departure</param>
-        /// <param name="outCity">Pick up city</param>
-        /// <param name="weight">Parcel Weigth</param>
-        /// <returns>List name-cost</returns>
-        public async Task<Dictionary<string, string>> GetCostsAsync(string inCity, string outCity, double weight)
+        public async Task<Dictionary<string, string>> CalculateCostAsync(string inCity, string outCity, double weight)
         {
-            var prices = new Dictionary<string, string>();
-            foreach (var item in _calculatorsCollection)
+            return new Dictionary<string, string>
             {
-                prices.Add(item.GetType().Name, await item.GetPriceAsync(inCity, outCity, weight));
-            }
-            return prices;
+                {_dpd.CompanyName,await _dpd.GetPriceAsync(inCity,outCity,weight) },
+                 {_alLogistic.CompanyName,await _alLogistic.GetPriceAsync(inCity,outCity,weight) },
+                 {_eastLine.CompanyName,await _eastLine.GetPriceAsync(inCity,outCity,weight) }
+            };
         }
     }
 }

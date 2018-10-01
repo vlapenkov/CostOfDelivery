@@ -17,6 +17,7 @@ namespace CostRequest.Calculator
         {
             return GetPriceFromSite(outCity, inCity, GetCar(outCity, inCity, (int)weight));
         }
+        public string CompanyName { get; set; } = "EastLine";
 
         #region приватные вспомогательные методы
         /*сайт автоматически подбирает размер машины в зависимости от веса груза*/

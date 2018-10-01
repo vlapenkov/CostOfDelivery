@@ -13,6 +13,7 @@ namespace CostRequest.Calculator
         private readonly string clientKey = "6078E6EF054E13F442B4A46ADDE226628F946EDC";
         private readonly long clientNumber = 1007003275;
 
+        public string CompanyName { get; set; } = "Dpd";
         public async Task<string> GetPriceAsync(string inCity, string outCity, double weight)
         {
          return  await CalculateCostAsync(inCity, outCity, weight);

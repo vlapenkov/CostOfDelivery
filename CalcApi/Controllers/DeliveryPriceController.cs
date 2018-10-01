@@ -16,7 +16,7 @@ namespace CalcApi.Controllers
     {
         public DeliveryPriceController()
         {
-            PriceList = new DeliveryPriceService();
+            PriceList = new DeliveryPriceService(new List<ICalculator>());
         }
 
         private IDeliveryPriceService PriceList;

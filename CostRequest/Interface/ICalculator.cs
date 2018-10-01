@@ -26,5 +26,6 @@ namespace CostRequest.Calculator
         /// <param name="weight">Масса груза в кг</param>
         /// <returns></returns>
         Task<string> GetPriceAsync(string inCity, string outCity, double weight);
+        string CompanyName { get; set; }
     }
 }
