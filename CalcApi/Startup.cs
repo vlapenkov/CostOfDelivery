@@ -32,9 +32,6 @@ namespace CalcApi
             services.AddTransient<AlLogistic>();
             services.AddTransient<EastLine>();
             services.AddTransient<DeliveryPriceService>();
-
-            _gKey = Configuration["_gKey"];
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
