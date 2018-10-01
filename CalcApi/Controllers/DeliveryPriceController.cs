@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,13 +14,17 @@ namespace CalcApi.Controllers
     [Route("api/DeliveryPrice")]
     public class DeliveryPriceController : Controller
     {
-        private IDeliveryPriceService PriceList = new DeliveryPriceService();
-
-        public async Task< Dictionary<string,string>> GetPrice(string inCity, string outCity, double weight)
+        public DeliveryPriceController()
         {
-            if (weight == 0) return null;
-            return await  PriceList.GetCosts( inCity,  outCity,  weight);
-        
+            PriceList = new DeliveryPriceService();
+        }
+
+        private IDeliveryPriceService PriceList;
+
+        public async Task<Dictionary<string,string>> GetPrice(string inCity, string outCity, double weight)
+        {
+            if (weight <= 0) return new Dictionary<string, string> { {"Error","Weigth  less or equal 0" } };
+            return await  PriceList.GetCostsAsync( inCity,  outCity,  weight);        
         }
     }
 }

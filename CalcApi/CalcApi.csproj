@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>733c351b-db21-4d72-baaf-af778a86afcf</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CostRequest\CostRequest.csproj" />
+    <ProjectReference Include="..\CostRequest\CostRequest.Services.csproj" />
   </ItemGroup>
 
 </Project>

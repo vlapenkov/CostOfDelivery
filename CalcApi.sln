@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CalcApi", "CalcApi\CalcApi.csproj", "{33D0A80B-0C05-4C0C-B08F-C9C422458E80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CostRequest", "CostRequest\CostRequest.csproj", "{A337CD30-879A-4D38-83E8-D085E77AB814}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CostRequest.Services", "CostRequest\CostRequest.Services.csproj", "{A337CD30-879A-4D38-83E8-D085E77AB814}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

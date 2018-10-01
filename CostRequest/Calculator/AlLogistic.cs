@@ -11,16 +11,18 @@ namespace CostRequest.Calculator
 {       
     public class AlLogistic : ICalculator
     {
+
+        private readonly string _gKey = "AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM";
         public async Task<string> GetPriceAsync(string inCity, string outCity, double weight)
         {
             string url = @"http://allogistik.ru/ajax/special-rate.php";
             if (weight <= 0) return "Неправильно указан вес";
 
             var outCityInfo = await GetCityIdAsync(outCity);
-            if (outCityInfo == null) return "Неизвестный город получения";
+            if (outCityInfo == null) return "Неизвестный город отправления";
             
             var inCityInfo = await GetCityIdAsync(inCity);
-            if(inCityInfo == null) return "Неизвестный город отправления";
+            if(inCityInfo == null) return "Неизвестный город получения";
 
             int typeTransport = SelectCar((int)weight);
             string distance = GetDistanceBetweenCities(outCityInfo.PROPERTY_MAP_VALUE, inCityInfo.PROPERTY_MAP_VALUE);
@@ -55,11 +57,11 @@ namespace CostRequest.Calculator
         #region приватные вспомогательные методы
         private string GetDistanceBetweenCities(string cityACoords, string cityBCoords)
         {
-            string gKey = "AIzaSyD0jr02Zqe4rH1wnR7cRbAZhAsQHra1pvM";//myKey not work :(
-            //AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM 
+            // string gKey = "AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM";//
+                          // "AIzaSyD0jr02Zqe4rH1wnR7cRbAZhAsQHra1pvM";//myKey not work :(
             var coordsA = cityACoords.Split(',');
             var coordsB = cityBCoords.Split(',');
-            string path = $@"https://maps.googleapis.com/maps/api/distancematrix/json?destinations={coordsA[0]},{coordsA[1]}&origins={coordsB[0]},{coordsB[1]}&key=AIzaSyBd_7Xjo_N5QSRRmzTHERgZmX3QO9gK6eM&language=ru&unit=metric&departure_time=now";
+            string path = $@"https://maps.googleapis.com/maps/api/distancematrix/json?destinations={coordsA[0]},{coordsA[1]}&origins={coordsB[0]},{coordsB[1]}&key={_gKey}&language=ru&unit=metric&departure_time=now";
 
             using (var client = new WebClient())
             {
@@ -67,11 +69,18 @@ namespace CostRequest.Calculator
                 var data = JsonConvert.DeserializeObject<GoogleAnswer>(Encoding.GetEncoding("UTF-8")
                   .GetString(response, 0, response.Length));
 
-                var dataStr = data.rows[0].elements[0].distance.text;// '1100км.' 
-                char nonbreakingSpace = (char)160;
-                var result = dataStr.Substring(0, dataStr.Length - 3).Replace(nonbreakingSpace, ' ').Replace(" ", "");
-                //  var result = string.Concat(dataStr.Where(d => d != dataStr.Last())).Replace(' ');
-                return result;
+                if (data.rows[0].elements[0]?.status == "OK")
+                {
+                    var dataStr = data.rows[0].elements[0]?.distance?.text;// '1100км.' 
+                    char nonbreakingSpace = (char)160;
+                    var result = dataStr.Substring(0, dataStr.Length - 3).Replace(nonbreakingSpace, ' ').Replace(" ", "");
+                    //  var result = string.Concat(dataStr.Where(d => d != dataStr.Last())).Replace(' ');
+                    return result;
+                }
+                else
+                {
+                    return data.status;
+                }
             }
 
         }

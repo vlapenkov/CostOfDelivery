@@ -18,8 +18,6 @@ namespace CostRequest.Calculator
             return GetPriceFromSite(outCity, inCity, GetCar(outCity, inCity, (int)weight));
         }
 
-
-
         #region приватные вспомогательные методы
         /*сайт автоматически подбирает размер машины в зависимости от веса груза*/
         private string GetCar(string inCity, string outCity, int weight)

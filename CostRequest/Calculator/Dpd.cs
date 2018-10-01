@@ -10,6 +10,9 @@ namespace CostRequest.Calculator
 {
     public class Dpd : ICalculator
     {
+        private readonly string clientKey = "6078E6EF054E13F442B4A46ADDE226628F946EDC";
+        private readonly long clientNumber = 1007003275;
+
         public async Task<string> GetPriceAsync(string inCity, string outCity, double weight)
         {
          return  await CalculateCostAsync(inCity, outCity, weight);
@@ -23,9 +26,6 @@ namespace CostRequest.Calculator
         {
                 _tempListOfCities = getCities().Result;
         }
-
-        private readonly string clientKey = "6078E6EF054E13F442B4A46ADDE226628F946EDC";
-        private readonly long clientNumber = 1007003275;
 
         private static DpdGeography.city[] _tempListOfCities;
 
@@ -51,9 +51,9 @@ namespace CostRequest.Calculator
             if (weight <= 0) return "Неправильно указан вес";
 
             DpdCalculator.city inCity = CastGeoCityToCalcCity(FindCityByFullName(inCityName));
-            if (inCity == null) return "Неизвестный город отправления";
-            DpdCalculator.city outCity = CastGeoCityToCalcCity(FindCityByFullName(OutCityName));
             if (inCity == null) return "Неизвестный город получения";
+            DpdCalculator.city outCity = CastGeoCityToCalcCity(FindCityByFullName(OutCityName));
+            if (outCity == null) return "Неизвестный город отправления";
 
             var client = new DPDCalculatorClient();
 
@@ -84,12 +84,13 @@ namespace CostRequest.Calculator
                 },// new CityRequestExtend(outCity),
                 selfDelivery = false,
                 selfPickup = false,
-                weight = weight
+                weight = weight,
+                serviceCode = "MAX"
             };
 
             var request = await client.getServiceCost2Async(serviceRequest);
-            double min = request.@return.Min(c => c.cost);
-            return request.@return.First(t=>t.cost==min).cost.ToString();
+      
+            return request.@return.First().cost.ToString();
            // return request.@return.Where(rq => rq.cost == min).Select(p => p.cost).ToString();
         }
 
