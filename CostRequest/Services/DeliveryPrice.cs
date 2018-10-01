@@ -9,7 +9,7 @@ namespace CalcApi.Services
     public class DeliveryPriceService : IDeliveryPriceService
     {
 
-        public async Task<Dictionary<string,string>>  GetCosts(string inCity, string outCity, double weigth)
+        public async Task<Dictionary<string,string>>  GetCosts(string inCity, string outCity, double weight)
         {
             List <ICalculator> list= new List<ICalculator>
             {
@@ -18,11 +18,9 @@ namespace CalcApi.Services
             Dictionary<string, string> Prices = new Dictionary<string, string>();
             foreach (var item in list)
             {
-                Prices.Add(item.GetType().Name, await item.GetPriceAsync( inCity,  outCity,  weigth));
+                Prices.Add(item.GetType().Name, await item.GetPriceAsync( inCity,  outCity,  weight));
             }
             return Prices;
-
         }
-
     }
 }

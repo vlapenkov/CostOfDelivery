@@ -5,6 +5,6 @@ namespace CalcApi.Services
 {
     public interface IDeliveryPriceService
     {
-        Task<Dictionary<string, string>> GetCosts(string inCity, string outCity, double weigth);
+        Task<Dictionary<string, string>> GetCosts(string inCity, string outCity, double weight);
     }
 }

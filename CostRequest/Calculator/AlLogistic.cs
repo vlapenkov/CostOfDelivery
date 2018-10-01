@@ -14,9 +14,14 @@ namespace CostRequest.Calculator
         public async Task<string> GetPriceAsync(string inCity, string outCity, double weight)
         {
             string url = @"http://allogistik.ru/ajax/special-rate.php";
+            if (weight <= 0) return "Неправильно указан вес";
 
             var outCityInfo = await GetCityIdAsync(outCity);
+            if (outCityInfo == null) return "Неизвестный город получения";
+            
             var inCityInfo = await GetCityIdAsync(inCity);
+            if(inCityInfo == null) return "Неизвестный город отправления";
+
             int typeTransport = SelectCar((int)weight);
             string distance = GetDistanceBetweenCities(outCityInfo.PROPERTY_MAP_VALUE, inCityInfo.PROPERTY_MAP_VALUE);
 
@@ -97,7 +102,7 @@ namespace CostRequest.Calculator
         /*в зависимости от массы груза, автоматически подбирается авто
          но если груз больше 20 тонн, выберется самая грузоподъемная, хоть она и расчитана до 
              */
-        private int SelectCar(int weigth) => weigth >= 2000 ? (weigth >= 5000 ? (weigth > 10000 ? (weigth < 20000 ? 2395 : 2395) : 2394) : 2393) : 2392;
+        private int SelectCar(int weight) => weight >= 2000 ? (weight >= 5000 ? (weight > 10000 ? (weight < 20000 ? 2395 : 2395) : 2394) : 2393) : 2392;
 
 
         

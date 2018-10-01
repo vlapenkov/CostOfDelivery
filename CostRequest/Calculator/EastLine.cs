@@ -22,9 +22,10 @@ namespace CostRequest.Calculator
 
         #region приватные вспомогательные методы
         /*сайт автоматически подбирает размер машины в зависимости от веса груза*/
-        private int GetCar(string inCity, string outCity, int weight)
+        private string GetCar(string inCity, string outCity, int weight)
         {
-            //тэг span.number
+            if (weight <= 0) return "Неправильно указан вес";
+
             string url = $@"https://www.eastlines.ru/raschet-stoimosti/?from={outCity}&from-place-id=&from-reference=&where={inCity}&where-place-id=&where-reference=&weight={weight}";
 
             var pageContent = LoadPage(url).Result;
@@ -32,14 +33,10 @@ namespace CostRequest.Calculator
             document.LoadHtml(pageContent);
 
             HtmlNodeCollection collection = document.DocumentNode.SelectNodes("//script[@type='text/javascript' and contains(.,'var selected_car_id = ')]");
-
-            //  var neededRow = collection.First().InnerText.Split('\n')[6].Split('=').Last().Trim(';').Trim(' ');
+            if (collection == null) return null;
             var neededRow = collection.First().InnerText.Split('\n').Where(r => r.Contains("selected_car_id")).First().Split('=').Last().Trim(';').Trim(' ');
-            int result = 0;
-            int.TryParse(neededRow, out result);
-            Console.WriteLine(result.ToString());
-
-            return result;
+           
+            return neededRow;
         }
         /*парсинг страницы с расчетами*/
         private async Task<string> LoadPage(string url)
@@ -66,8 +63,8 @@ namespace CostRequest.Calculator
             return result;
         }
 
-        private async Task<string> GetPriceFromSite(string inCity, string outCity, int car)
-        {
+        private async Task<string> GetPriceFromSite(string inCity, string outCity, string car)
+        {           
             string url = @"https://www.eastlines.ru";
             using (var client = new WebClient())
             {
@@ -79,7 +76,7 @@ namespace CostRequest.Calculator
                 pars.Add("module", "calc");
                 pars.Add("city1", inCity);
                 pars.Add("city2", outCity);
-                pars.Add("car", car.ToString());
+                pars.Add("car", car);
 
                 // Посылаем параметры на сервер
                 var response = await client.UploadValuesTaskAsync(url, pars);

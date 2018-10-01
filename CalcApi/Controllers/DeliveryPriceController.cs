@@ -15,9 +15,11 @@ namespace CalcApi.Controllers
     {
         private IDeliveryPriceService PriceList = new DeliveryPriceService();
 
-        public async Task< Dictionary<string,string>> GetPrice(string inCity, string outCity, double weigth)
+        public async Task< Dictionary<string,string>> GetPrice(string inCity, string outCity, double weight)
         {
-          return await  PriceList.GetCosts( inCity,  outCity,  weigth);
+            if (weight == 0) return null;
+            return await  PriceList.GetCosts( inCity,  outCity,  weight);
+        
         }
     }
 }

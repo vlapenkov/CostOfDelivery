@@ -19,6 +19,11 @@ namespace CostRequest.Calculator
             if (_tempListOfCities == null)
                 _tempListOfCities = getCities().Result;
         }
+        protected void UpdateData()
+        {
+                _tempListOfCities = getCities().Result;
+        }
+
         private readonly string clientKey = "6078E6EF054E13F442B4A46ADDE226628F946EDC";
         private readonly long clientNumber = 1007003275;
 
@@ -43,8 +48,12 @@ namespace CostRequest.Calculator
         /// <returns></returns>
         private async Task<string> CalculateCostAsync(string inCityName, string OutCityName, double weight)
         {
+            if (weight <= 0) return "Неправильно указан вес";
+
             DpdCalculator.city inCity = CastGeoCityToCalcCity(FindCityByFullName(inCityName));
+            if (inCity == null) return "Неизвестный город отправления";
             DpdCalculator.city outCity = CastGeoCityToCalcCity(FindCityByFullName(OutCityName));
+            if (inCity == null) return "Неизвестный город получения";
 
             var client = new DPDCalculatorClient();
 
@@ -98,11 +107,13 @@ namespace CostRequest.Calculator
 
         private DpdGeography.city FindCityByFullName(string cityName)
         {
-            return _tempListOfCities.First(s => s.cityName.StartsWith(cityName));
+            return _tempListOfCities.FirstOrDefault(s => s.cityName.StartsWith(cityName));
+
         }
 
         private DpdCalculator.city CastGeoCityToCalcCity(DpdGeography.city city)
         {
+            if (city == null) return null;
             return new DpdCalculator.city
             {
                 cityId = city.cityId,
