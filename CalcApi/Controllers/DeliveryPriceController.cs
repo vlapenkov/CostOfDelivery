@@ -14,9 +14,11 @@ namespace CalcApi.Controllers
     [Route("api/DeliveryPrice")]
     public class DeliveryPriceController : Controller
     {
-        public DeliveryPriceController()
+        private readonly DeliveryPriceService _service;
+        public DeliveryPriceController(DeliveryPriceService service)
         {
-            PriceList = new DeliveryPriceService();
+            _service = service;
+         //   PriceList = new DeliveryPriceService();
         }
 
         private DeliveryPriceService PriceList;
@@ -24,7 +26,7 @@ namespace CalcApi.Controllers
         public async Task<Dictionary<string,string>> GetPrice(string inCity, string outCity, double weight)
         {
             if (weight <= 0) return new Dictionary<string, string> { {"Error","Weigth  less or equal 0" } };
-            return await  PriceList.CalculateCostAsync( inCity,  outCity,  weight);        
+            return await _service.CalculateCostAsync( inCity,  outCity,  weight);        
         }
     }
 }

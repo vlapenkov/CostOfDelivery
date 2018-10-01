@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace CalcApi
 {
@@ -27,11 +25,15 @@ namespace CalcApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-          
+            services.AddSingleton<IConfiguration>(Configuration);
             services.AddTransient<Dpd>();
             services.AddTransient<AlLogistic>();
             services.AddTransient<EastLine>();
             services.AddTransient<DeliveryPriceService>();
+         //   services.AddTransient<IConfiguration>();
+
+         //   services.AddSingleton<IConfiguration>(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

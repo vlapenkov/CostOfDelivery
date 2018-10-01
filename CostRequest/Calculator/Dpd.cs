@@ -13,14 +13,19 @@ namespace CostRequest.Calculator
     {
         private IConfiguration Configuration { get; set; }
 
-        public Dpd(IConfiguration configuration)
+        public Dpd(IConfiguration configuration) 
         {
+ 
             Configuration = configuration;
             clientKey = Configuration["DpdClientKey"];
             clientNumber = Int64.Parse(Configuration["DpdClientNumber"]);
+            if (_tempListOfCities == null)
+            {
+                _tempListOfCities = getCities().Result;
+            }
         }
-        private readonly string clientKey; //= "6078E6EF054E13F442B4A46ADDE226628F946EDC";
-        private readonly long clientNumber;// = 1007003275;
+        private readonly string clientKey; 
+        private readonly long clientNumber;
 
        
 
@@ -28,11 +33,6 @@ namespace CostRequest.Calculator
         public async Task<string> GetPriceAsync(string inCity, string outCity, double weight)
         {
          return  await CalculateCostAsync(inCity, outCity, weight);
-        }
-        public Dpd()
-        {
-            if (_tempListOfCities == null)
-                _tempListOfCities = getCities().Result;
         }
         protected void UpdateData()
         {

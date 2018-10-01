@@ -10,15 +10,17 @@ namespace CalcApi.Services
     public class DeliveryPriceService : IDeliveryPriceService
     {
 
-        public DeliveryPriceService(ICalculator dpd=null,ICalculator alLogistic = null, ICalculator eastLine = null)
+        private Dpd _dpd;
+        private AlLogistic _alLogistic;
+        private EastLine _eastLine;
+
+        public DeliveryPriceService(Dpd dpd, AlLogistic alLogistic , EastLine eastLine )
         {
             _dpd = dpd;
             _alLogistic = alLogistic;
             _eastLine = eastLine;
         }
-        private ICalculator _dpd;
-        private ICalculator _alLogistic;
-        private ICalculator _eastLine;
+      
     
 
         public async Task<Dictionary<string, string>> CalculateCostAsync(string inCity, string outCity, double weight)
