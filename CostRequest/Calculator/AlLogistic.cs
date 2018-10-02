@@ -36,7 +36,7 @@ namespace CostRequest.Calculator
 
             int typeTransport = SelectCar((int)weight);
             string distance = GetDistanceBetweenCities(outCityInfo.PROPERTY_MAP_VALUE, inCityInfo.PROPERTY_MAP_VALUE);
-
+            if (distance.Equals((-1).ToString())) return "Не удалось определить расстояние между городами";
             using (var client = new WebClient())
             {
                 // Создаём коллекцию параметров
@@ -87,7 +87,7 @@ namespace CostRequest.Calculator
                 }
                 else
                 {
-                    return data.status;
+                    return (-1).ToString();//гугл карты не вернули расстояние между городами
                 }
             }
 
@@ -109,10 +109,19 @@ namespace CostRequest.Calculator
                 // Посылаем параметры на сервер
                 var response = await webClient.UploadValuesTaskAsync(url, pars);
                 //Конвертируем данные из байтов в строку, а строку в JSON и отправляем серверу
-                var data = JsonConvert.DeserializeObject<AlLogisticModel[]>(Encoding.GetEncoding("UTF-8")
-                   .GetString(response, 0, response.Length));
+                try
+                {
+                    var data = JsonConvert.DeserializeObject<AlLogisticModel[]>(Encoding.GetEncoding("UTF-8")
+             .GetString(response, 0, response.Length));
+                    return data.FirstOrDefault();
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+          
 
-                return data.FirstOrDefault();
+               
             }
         }
         /*в зависимости от массы груза, автоматически подбирается авто

@@ -67,6 +67,7 @@ namespace CostRequest.Calculator
             DpdCalculator.city outCity = CastGeoCityToCalcCity(FindCityByFullName(OutCityName));
             if (outCity == null) return "Неизвестный город отправления";
 
+
             var client = new DPDCalculatorClient();
 
             var serviceRequest = new serviceCostRequest
@@ -119,7 +120,8 @@ namespace CostRequest.Calculator
 
         private DpdGeography.city FindCityByFullName(string cityName)
         {
-            return _tempListOfCities.FirstOrDefault(s => s.cityName.StartsWith(cityName));
+
+            return _tempListOfCities.FirstOrDefault(s => s.cityName.ToLower().StartsWith(cityName.ToLower()));
 
         }
 
