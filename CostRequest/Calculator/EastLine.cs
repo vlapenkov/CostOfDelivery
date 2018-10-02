@@ -68,14 +68,15 @@ namespace CostRequest.Calculator
             using (var client = new WebClient())
             {
                 // Создаём коллекцию параметров
-                var pars = new NameValueCollection();
-
-                // Добавляем необходимые параметры в виде пар ключ, значение
-                pars.Add("action", "getCalcInfo");
-                pars.Add("module", "calc");
-                pars.Add("city1", inCity);
-                pars.Add("city2", outCity);
-                pars.Add("car", car);
+                var pars = new NameValueCollection
+                {
+                    // Добавляем необходимые параметры в виде пар ключ, значение
+                    { "action", "getCalcInfo" },
+                    { "module", "calc" },
+                    { "city1", inCity },
+                    { "city2", outCity },
+                    { "car", car }
+                };
 
                 // Посылаем параметры на сервер
                 var response = await client.UploadValuesTaskAsync(url, pars);

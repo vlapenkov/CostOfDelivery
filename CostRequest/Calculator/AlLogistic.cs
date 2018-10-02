@@ -82,7 +82,6 @@ namespace CostRequest.Calculator
                     var dataStr = data.rows[0].elements[0]?.distance?.text;// '1100км.' 
                     char nonbreakingSpace = (char)160;
                     var result = dataStr.Substring(0, dataStr.Length - 3).Replace(nonbreakingSpace, ' ').Replace(" ", "");
-                    //  var result = string.Concat(dataStr.Where(d => d != dataStr.Last())).Replace(' ');
                     return result;
                 }
                 else

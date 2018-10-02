@@ -20,10 +20,6 @@ namespace CalcApi.Controllers
             _service = service;
         }
 
-        public async Task<Dictionary<string,string>> GetPrice(string inCity, string outCity, double weight)
-        {
-            if (weight <= 0) return new Dictionary<string, string> { {"Error","Weigth  less or equal 0" } };
-            return await _service.CalculateCostAsync( inCity,  outCity,  weight);        
-        }
+        public async Task<Dictionary<string, string>> GetPrice(string inCity, string outCity, double weight) => await _service.CalculateCostAsync(inCity, outCity, weight);
     }
 }

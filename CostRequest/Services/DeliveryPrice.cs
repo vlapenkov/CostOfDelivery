@@ -25,6 +25,7 @@ namespace CalcApi.Services
 
         public async Task<Dictionary<string, string>> CalculateCostAsync(string inCity, string outCity, double weight)
         {
+            if (weight <= 0) return new Dictionary<string, string> { { "Error", "Weigth  less or equal 0" } };
             var result = new Dictionary<string, string>();
             if (_dpd != null)
             {
