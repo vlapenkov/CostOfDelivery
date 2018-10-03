@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.ServiceModel;
 
 namespace CostRequest.Calculator
 {
@@ -95,10 +96,17 @@ namespace CostRequest.Calculator
                 serviceCode = "MAX"//если сервис не задан возвращает список всех доступных услуг
 
             };
-
-            var request = await client.getServiceCost2Async(serviceRequest);
-            /*Если услуга была задана во входном сообщении, то при успешном выполнении запроса массив ответного сообщения будет состоять из одного элемента.*/
-            return request.@return.First().cost.ToString();
+            try
+            {
+                var request = await client.getServiceCost2Async(serviceRequest);
+                /*Если услуга была задана во входном сообщении, то при успешном выполнении запроса массив ответного сообщения будет состоять из одного элемента.*/
+                return request.@return.First().cost.ToString();
+            }
+            catch (FaultException)
+            {
+                return "Ошибка ответа";
+            }
+            
         }
 
         private DpdGeography.city FindCityByFullName(string cityName)

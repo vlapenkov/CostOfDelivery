@@ -52,7 +52,7 @@ namespace CostRequest.Calculator
                     // Добавляем необходимые параметры в виде пар ключ, значение
                     { "cityIn", $"{inCityInfo.NAME}, {inCityInfo.REGION}" },
                     { "cityOut", $"{outCityInfo.NAME}, {outCityInfo.REGION}" },
-                    { "distance", distance.ToString() },
+                    { "distance", distance },
                     { "transportType", typeTransport.ToString() },
                     { "cityInId", inCityInfo.ID.ToString() },
                     { "cityOutId",outCityInfo.ID.ToString()}
@@ -63,9 +63,18 @@ namespace CostRequest.Calculator
                 //Конвертируем данные из байтов в строку, а строку в JSON и отправляем клиенту
                 var data = JsonConvert.DeserializeObject<Dictionary<string, string>>(Encoding.GetEncoding("UTF-8")
                    .GetString(response, 0, response.Length));
-                if (data == null)
+                var distanseInt = Int32.Parse(distance);
+                if (data["price"].Equals((-1).ToString()))
                 {
-                    return "Через менеджера";
+                    if (distanseInt < 150)
+                    {
+                        return (30 * distanseInt).ToString();
+                    }
+                    else
+                    {
+                        return (35 * distanseInt).ToString();
+                    }
+
                 }
                 return data.First().Value;
             }
@@ -116,18 +125,18 @@ namespace CostRequest.Calculator
                 var response = await webClient.UploadValuesTaskAsync(url, pars);
                 //Конвертируем данные из байтов в строку, а строку в JSON и отправляем серверу
                 try
-                {
+                { 
                     var data = JsonConvert.DeserializeObject<AlLogisticModel[]>(Encoding.GetEncoding("UTF-8")
              .GetString(response, 0, response.Length));
                     return data.FirstOrDefault();
                 }
-                catch (Exception)
+                catch (JsonSerializationException)
                 {
-                    return null;
+                    var data = JsonConvert.DeserializeObject<AlLogisticModel>(Encoding.GetEncoding("UTF-8")
+           .GetString(response, 0, response.Length));
+                    return data;
                 }
-          
-
-               
+           
             }
         }
         /*в зависимости от массы груза, автоматически подбирается авто
