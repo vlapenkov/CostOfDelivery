@@ -15,7 +15,7 @@ namespace CostRequest.Calculator
     //    public int SORT { get; set; }
     //    public string REGION { get; set; }
     //}
-    public class AlLogisticModel
+    public class AlLogisticCityModel
     {
         public string ID { get; set; }
         public string NAME { get; set; }

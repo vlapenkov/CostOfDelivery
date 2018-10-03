@@ -108,7 +108,7 @@ namespace CostRequest.Calculator
 
         }
 
-        private async Task<AlLogisticModel> GetCityIdAsync(string name)
+        private async Task<AlLogisticCityModel> GetCityIdAsync(string name)
         {
             string url = "http://allogistik.ru/ajax/cities.php";
 
@@ -126,13 +126,13 @@ namespace CostRequest.Calculator
                 //Конвертируем данные из байтов в строку, а строку в JSON и отправляем серверу
                 try
                 { 
-                    var data = JsonConvert.DeserializeObject<AlLogisticModel[]>(Encoding.GetEncoding("UTF-8")
+                    var data = JsonConvert.DeserializeObject<AlLogisticCityModel[]>(Encoding.GetEncoding("UTF-8")
              .GetString(response, 0, response.Length));
                     return data.FirstOrDefault();
                 }
                 catch (JsonSerializationException)
                 {
-                    var data = JsonConvert.DeserializeObject<AlLogisticModel>(Encoding.GetEncoding("UTF-8")
+                    var data = JsonConvert.DeserializeObject<AlLogisticCityModel>(Encoding.GetEncoding("UTF-8")
            .GetString(response, 0, response.Length));
                     return data;
                 }
