@@ -89,19 +89,22 @@ namespace CostRequest.Calculator
                     regionCode = outCity.regionCode,
                     regionCodeSpecified = outCity.regionCodeSpecified
                 },
-                selfDelivery = false,
-                selfPickup = false,
-                weight = weight,
-                serviceCode = "MAX"
+                selfDelivery = false,//самопривоз самовывоз с терминала
+                selfPickup = false,//самопривоз на терминал
+                weight = weight,//*
+                serviceCode = "MAX"//если сервис не задан возвращает список всех доступных услуг
+
             };
 
-            var request = await client.getServiceCost2Async(serviceRequest);      
+            var request = await client.getServiceCost2Async(serviceRequest);
+            /*Если услуга была задана во входном сообщении, то при успешном выполнении запроса массив ответного сообщения будет состоять из одного элемента.*/
             return request.@return.First().cost.ToString();
         }
 
         private DpdGeography.city FindCityByFullName(string cityName)
         {
-            return _tempListOfCities.FirstOrDefault(s => s.cityName.ToLower().StartsWith(cityName.ToLower()));
+            var result = _tempListOfCities.FirstOrDefault(s => s.cityName.ToLower().Equals(cityName.ToLower()));
+            return result;
         }
 
         private DpdCalculator.city CastGeoCityToCalcCity(DpdGeography.city city)
