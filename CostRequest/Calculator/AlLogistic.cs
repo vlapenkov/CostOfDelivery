@@ -22,17 +22,24 @@ namespace CostRequest.Calculator
         private readonly string _gKey;
 
         public string CompanyName { get; set; } = "AlLogistic";
-
+        /// <summary>
+        /// Расчет стоимости
+        /// </summary>
+        /// <param name="inCity">Город получения груза ТК</param>
+        /// <param name="outCity">Город сдачи груза клиенту</param>
+        /// <param name="weight">Вес</param>
+        /// <returns>Цена доставки</returns>
         public async Task<string> GetPriceAsync(string inCity, string outCity, double weight)
         {
             string url = @"http://allogistik.ru/ajax/special-rate.php";
             if (weight <= 0) return "Неправильно указан вес";
 
-            var outCityInfo = await GetCityIdAsync(outCity);
-            if (outCityInfo == null) return "Неизвестный город отправления";
-            
+            //направление движения играет большую роль в ценообразовании
             var inCityInfo = await GetCityIdAsync(inCity);
-            if(inCityInfo == null) return "Неизвестный город получения";
+            if (inCityInfo == null) return "Неизвестный город отправления";
+            
+            var outCityInfo = await GetCityIdAsync(outCity);
+            if(outCityInfo == null) return "Неизвестный город получения";
 
             int typeTransport = SelectCar((int)weight);
             string distance = GetDistanceBetweenCities(outCityInfo.PROPERTY_MAP_VALUE, inCityInfo.PROPERTY_MAP_VALUE);
@@ -43,25 +50,14 @@ namespace CostRequest.Calculator
                 var pars = new NameValueCollection
                 {
                     // Добавляем необходимые параметры в виде пар ключ, значение
-                    { "cityIn", inCityInfo.NAME },
-                    { "cityOut", outCityInfo.NAME },
+                    { "cityIn", $"{inCityInfo.NAME}, {inCityInfo.REGION}" },
+                    { "cityOut", $"{outCityInfo.NAME}, {outCityInfo.REGION}" },
                     { "distance", distance.ToString() },
                     { "transportType", typeTransport.ToString() },
                     { "cityInId", inCityInfo.ID.ToString() },
-                    { "cityOutId", outCityInfo.ID.ToString() }
+                    { "cityOutId",outCityInfo.ID.ToString()}
                 };
                 
-              /*  var pars = new NameValueCollection
-                {
-                    // Добавляем необходимые параметры в виде пар ключ, значение
-                    { "cityIn", "Омск, Омская обл."},
-                    { "cityOut", "Москва, Московская обл." },
-                    { "distance", "2707" },
-                    { "transportType", "2394" },
-                    { "cityInId", "1572" },
-                    { "cityOutId", "1400" }
-                };
-                */
                 // Посылаем параметры на сервер
                 var response = await client.UploadValuesTaskAsync(url, pars);
                 //Конвертируем данные из байтов в строку, а строку в JSON и отправляем клиенту
