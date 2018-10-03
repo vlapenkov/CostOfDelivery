@@ -16,9 +16,9 @@ namespace CalcApi.Services
 
         public DeliveryPriceService(Dpd dpd, AlLogistic alLogistic , EastLine eastLine )
         {
-          //  _dpd = dpd;
+            _dpd = dpd;
             _alLogistic = alLogistic;
-           // _eastLine = eastLine;
+            _eastLine = eastLine;
         }
       
     
