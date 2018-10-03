@@ -19,7 +19,19 @@ namespace CalcApi.Controllers
         {
             _service = service;
         }
-
+        /// <summary>
+        /// /api/DeliveryPrice/GetPrice?inCity=Ярославль&outCity=Москва&weight=1000
+        /// </summary>
+        /// <param name="inCity"></param>
+        /// <param name="outCity"></param>
+        /// <param name="weight"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("getprice")]
         public async Task<Dictionary<string, string>> GetPrice(string inCity, string outCity, double weight) => await _service.CalculateCostAsync(inCity, outCity, weight);
+
+        [HttpGet]
+        [Route("test")]
+        public string Test() => "test";
     }
 }

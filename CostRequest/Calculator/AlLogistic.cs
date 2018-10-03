@@ -50,7 +50,18 @@ namespace CostRequest.Calculator
                     { "cityInId", inCityInfo.ID.ToString() },
                     { "cityOutId", outCityInfo.ID.ToString() }
                 };
-
+                
+              /*  var pars = new NameValueCollection
+                {
+                    // Добавляем необходимые параметры в виде пар ключ, значение
+                    { "cityIn", "Омск, Омская обл."},
+                    { "cityOut", "Москва, Московская обл." },
+                    { "distance", "2707" },
+                    { "transportType", "2394" },
+                    { "cityInId", "1572" },
+                    { "cityOutId", "1400" }
+                };
+                */
                 // Посылаем параметры на сервер
                 var response = await client.UploadValuesTaskAsync(url, pars);
                 //Конвертируем данные из байтов в строку, а строку в JSON и отправляем клиенту

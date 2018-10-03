@@ -15,7 +15,9 @@ namespace CalcApi
     {
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+          Configuration = configuration;
+
+
         }
 
         public IConfiguration Configuration { get; }
@@ -38,6 +40,7 @@ namespace CalcApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                
             }
 
             app.UseMvc();
