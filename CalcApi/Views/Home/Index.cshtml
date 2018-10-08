@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["Title"] = "Рассчет стоимости";
+
+}
+
+
+
+<div class="container" style="margin-top:250px;">
+    <div class="row">
+        <div class="offset-md-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h3 class="text-center" style="margin-bottom:50px;">Калькулятор доставки</h3></div>
+                <div class="panel-body">
+                    <form action="/action_page.php" id="calc-form">
+                        <div class="form-group">
+                            <label for="source" class="sr-only">город отправления:</label>
+                            <input type="text" class="form-control" id="source" placeholder="город отправления" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="dest" class="sr-only">город назначения:</label>
+                            <input type="text" class="form-control" id="dest" placeholder="город назначения" autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                            <label for="weight" class="sr-only">вес:</label>
+                            <input type="number" class="form-control" id="weight" placeholder="вес в кг." value="1000">
+                        </div>
+                        <div id="result" style="min-height:100px;" class="text-center"></div>
+                        <i id="spinner" style="display:none;" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary" id="calc">Рассчитать</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.getElementById('calc-form').addEventListener('submit', function (evt) {
+        evt.preventDefault();
+        let resultEl = document.getElementById('result'),
+            source = document.getElementById('source'),
+            dest = document.getElementById('dest'),
+            weight = document.getElementById('weight'),
+            spinner = document.getElementById('spinner');
+
+        resultEl.innerHTML = "";
+
+        var newSpinner = spinner.cloneNode(true);
+        newSpinner.style.display = "inline-block";
+        resultEl.appendChild(newSpinner);
+
+        
+        let strToPass = "/api/deliveryprice/getPrice?inCity=" + source.value + "&outCity=" + dest.value + "&weight=" + weight.value;
+       console.log(strToPass);
+        fetch(strToPass).
+            then(function (response) {
+                
+                return response.json();
+
+
+            }).then(function (result) {
+
+                newSpinner.style.display = "none";        
+                resultEl.innerHTML = "<ul class='list-unstyled'>";
+                if (result.hasOwnProperty("Dpd")) resultEl.innerHTML +="<li>"+ "Dpd: "+ result["Dpd"]+"</li>";
+                if (result.hasOwnProperty("AlLogistic")) resultEl.innerHTML += "<li>" + "AlLogistic: " + result["AlLogistic"] + "</li>";
+                if (result.hasOwnProperty("EastLine")) resultEl.innerHTML += "<li>" + "EastLine: " + result["EastLine"] + "</li>";
+                resultEl.innerHTML += "</ul>";
+                
+                console.log(result)
+            }).catch(function (error) {
+                newSpinner.style.display = "none";  
+                resultEl.innerHTML = "ошибка";
+                console.error( error.message);
+            });
+
+       
+    });
+        
+  </script>

@@ -42,8 +42,15 @@ namespace CalcApi
                 app.UseDeveloperExceptionPage();
                 
             }
-
-            app.UseMvc();
+            app.UseStaticFiles();
+            /*  app.UseMvc(routes =>
+              {
+                  routes.MapRoute(
+                      name: "default",
+                      template: "{controller=home}/{action=Index}/{id?}");
+              }); */
+            app.UseMvcWithDefaultRoute();
+            //app.UseMvc();
         }
     }
 }
