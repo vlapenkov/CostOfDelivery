@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CalcApi.Services;
 using CostRequest.Calculator;
+using CostRequest.Services.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,5 +34,11 @@ namespace CalcApi.Controllers
         [HttpGet]
         [Route("test")]
         public string Test() => "test";
+
+
+        [HttpGet]
+        [Route("Cities")]
+        public List<string> GetListOfCities(string name) => CitiesService.ListOfCitiesStartWith(name);
+
     }
 }
