@@ -25,8 +25,8 @@ namespace CalcApi.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="inCity">Куда</param>
-        /// <param name="outCity">Откуда</param>
+        /// <param name="inCity">откуда</param>
+        /// <param name="outCity">Куда</param>
         /// <param name="weight">Вес</param>
         /// <returns>Цена доставки</returns>
         public async Task<Dictionary<string, string>> CalculateCostAsync(string inCity, string outCity, double weight)
@@ -39,11 +39,11 @@ namespace CalcApi.Services
             }
             if (_alLogistic != null)
             {
-                result.Add(_alLogistic.CompanyName, await _alLogistic.GetPriceAsync(inCity, outCity, weight));
+                result.Add(_alLogistic.CompanyName, await _alLogistic.GetPriceAsync(outCity, inCity, weight));
             }
             if(_eastLine!=null)
             {
-                result.Add(_eastLine.CompanyName, await _eastLine.GetPriceAsync(inCity, outCity, weight));
+                result.Add(_eastLine.CompanyName, await _eastLine.GetPriceAsync(outCity, inCity, weight));
             };
             return result;
         }
